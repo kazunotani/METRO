@@ -108,9 +108,9 @@
          font-size : 1300%!important;}
       .example6{
         position: absolute;
-        font-size: 300%;
+        font-size: 150%;
         left:1050px;
-        top: 130px;}
+        top: 180px;}
         .example9{
         border-radius: 100px;
        display: block;
@@ -177,8 +177,8 @@
     <input type="text"id = "memo">
   </div>
   <a onclick = "StartStop();" id = "STARTS"href="#" class="example3">スタート</a>
-  <input class = "example5"type="number"  min = "1" max="255"height="10" id = "Itempo">
-  <p class = "example6">テンポ</p>
+  <input class = "example5"type="number"  min = "1" max="255"height="10" id = "Itempo" readonly>
+  <p class = "example6">テンポ Nキーを押しながら数字入力</p>
   <div class="example"></div>
   <button id="connect"class = "file-label"onclick = "SAVE();" >セーブ</button>
   <label class="file-label">
@@ -222,6 +222,43 @@
     }
     arrow.style.top = arrowY + "px";
     });
+    window.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      StartStop();
+    }
+  });
+
+
+
+  
+
+  let inputValue = '';
+
+// キーボード入力をキャッチするイベントリスナー
+window.addEventListener('keydown', function(event) {
+    if (event.key === 'n') {
+      isNPressed = true;
+    }
+  // 数字のキーだけを処理
+  if (isNPressed &&  event.key >= '0' && event.key <= '9') {
+    inputValue += event.key;  // 入力された数字を追加
+
+    // 3桁に達した場合は最初の桁を削除して左にスライド
+    if (inputValue.length > 3) {
+      inputValue = inputValue.slice(1);  // 最初の桁を削除
+    }
+
+    // 3桁の数字をdivに反映
+    document.getElementById("Itempo").value = inputValue.padStart(3, '0');  // 必要なら0で埋める
+  }
+});
+
+window.addEventListener('keyup', function(event) {
+    if (event.key === 'n') {
+      isNPressed = false;
+    }
+  });
+
     function Add(){
        var original = document.getElementById("status1");
        var before = document.getElementById("status" + volumecount);
