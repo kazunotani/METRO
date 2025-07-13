@@ -41,7 +41,7 @@
        .example4{
         border-radius: 100px;
        display: block;
-       width: 600px;
+       width: 250px;
        padding: 15px;
        box-sizing: border-box;
        background: #ff0000;
@@ -51,6 +51,50 @@
        margin: 10px 0;
        font-size : 200%;
       }
+      .example4:active {
+  filter: brightness(80%);
+  transform: scale(0.97);
+}
+       .example400{
+        position:absolute;
+       top: 78px;
+       left:280px;
+        border-radius: 100px;
+       display: block;
+       width: 200px;
+       padding: 15px;
+       box-sizing: border-box;
+       background: #ff6600;
+       color: #000000;
+       text-decoration: none;
+       text-align: center;
+       margin: 10px 0;
+       font-size : 200%;
+      }
+            .example400:active {
+  filter: brightness(80%);
+  transform: scale(0.97);
+}
+       .example40000{
+        position:absolute;
+       top: 78px;
+       left:580px;
+        border-radius: 100px;
+       display: block;
+       width: 200px;
+       padding: 15px;
+       box-sizing: border-box;
+       background: #ff00ff;
+       color: #000000;
+       text-decoration: none;
+       text-align: center;
+       margin: 10px 0;
+       font-size : 200%;
+      }
+            .example40000:active {
+  filter: brightness(80%);
+  transform: scale(0.97);
+}
       .example77{
        box-sizing: border-box;
        background: #7bff00;
@@ -167,6 +211,8 @@
   <button size = "30px"onclick = "Add();">追加</button>
   <button onclick = "Rem();">一番下を削除</button>
   <a href="#" class="example4" onclick = "Run();"id = "STARTR">実行</a>
+  <a href="#" class="example400" onclick = "STOPRun();">中断</a>
+    <a href="#" class="example40000" onclick = "ReRun();">再実行</a>
   <a href="#" class="example9" onclick = "Re();"id = "Re">テンポ変更</a>
   <div class = "field" id="status1">
     <p ><font size="6">テンポ&nbsp&nbsp</font></p>
@@ -337,10 +383,16 @@ function RESET(){
       window.setTimeout(() => {
       Send(Math.floor(prog.querySelector("#tempo").value));
       }, fewtime);
+      if(num == 1){
+      window.setTimeout(() => {
+          Send((Math.floor(prog.querySelector("#beat").value)) + 1);
+        },time);
+      }
+      else{
       window.setTimeout(() => {
           Send((Math.floor(prog.querySelector("#beat").value)));
-      },time);
-
+        },time);
+      }
     }
     
     function ReadLoop(num){
@@ -353,21 +405,21 @@ function RESET(){
     function Program(){
       console.log("startsending...");
       setTimeout(function(){Send("RUNSEND");
-      document.getElementById("STARTR").textContent = "実行中(クリックで終了)";}, fewtime);
+     } , fewtime);
       ReadLoop((arrowY-170)/78+1);
     }
     function Run(){
      if(document.getElementById("STARTS").textContent == "スタート"){
-      if(document.getElementById("STARTR").textContent == "実行")
-      {
           Program();
-      }
-      else if(document.getElementById("STARTR").textContent == "実行中(クリックで終了)")
-      {
-        setTimeout(function(){SendByte("252")/*252→break,254→stop*/}, fewtime);
-        document.getElementById("STARTR").textContent = "実行";
-      }
      }
+    }
+    function STOPRun(){
+      setTimeout(function(){SendByte("252")/*252 break, 254 stop*/}, fewtime);
+
+    }
+        function ReRun(){
+        setTimeout(function(){Send("RIGHTNOW")},time);
+        setTimeout(function(){Send("RUN")},time * 2);
     }
     function StartStop(){
       if(document.getElementById("STARTS").textContent == "スタート")
