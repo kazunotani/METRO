@@ -174,8 +174,8 @@
       #arrow{
       font-size:3em;
          position:absolute;
-         top:170px;
-         left:750px;
+         top:180px;
+         left:830px;
       } 
       .file-label {
   display: inline-block;
@@ -235,12 +235,13 @@
 
     
   <script>
+
     let port;
     let writer;
     //   if poxY=160 then1 1➡2 ,,, 
     //!!!!RUN➡BREAK         START➡STOP
     const arrow = document.getElementById("arrow");
-    let arrowY = 170;
+    let arrowY = 1;
     const fewtime = 10;
     time = 200;
     let start = 0;
@@ -260,13 +261,13 @@
     window.addEventListener("keydown",(event) => {
     switch(event.key){
     case "ArrowUp":
-       if(arrowY != 170){arrowY -= 78;}
+       if(arrowY != 1){arrowY -= 1;}
        break;
     case "ArrowDown":
-      if(arrowY != (volumecount - 1)*78 + 170){ arrowY += 78;}
+      if(arrowY != (volumecount)){ arrowY += 1;}
        break;
     }
-    arrow.style.top = arrowY + "px";
+    arrow.style.top = ((arrowY-1)*80.2+180) + "px";
     });
     window.addEventListener("keydown", function(e) {
     if (e.key === "Enter") {
@@ -277,7 +278,7 @@
 
 
   
-
+ 
   let inputValue = '';
 
 // キーボード入力をキャッチするイベントリスナー
@@ -383,7 +384,7 @@ function RESET(){
       window.setTimeout(() => {
       Send(Math.floor(prog.querySelector("#tempo").value));
       }, fewtime);
-      if(num == 1){
+      if(num == arrowY){
       window.setTimeout(() => {
           Send((Math.floor(prog.querySelector("#beat").value)) + 1);
         },time);
@@ -406,7 +407,7 @@ function RESET(){
       console.log("startsending...");
       setTimeout(function(){Send("RUNSEND");
      } , fewtime);
-      ReadLoop((arrowY-170)/78+1);
+      ReadLoop(arrowY);
     }
     function Run(){
      if(document.getElementById("STARTS").textContent == "スタート"){
