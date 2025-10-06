@@ -235,7 +235,7 @@
 
     
   <script>
-
+    let wise = 79;
     let port;
     let writer;
     //   if poxY=160 then1 1➡2 ,,, 
@@ -267,7 +267,7 @@
       if(arrowY != (volumecount)){ arrowY += 1;}
        break;
     }
-    arrow.style.top = ((arrowY-1)*80+180) + "px";
+    arrow.style.top = ((arrowY-1)*wise+180) + "px";
     });
     window.addEventListener("keydown", function(e) {
     if (e.key === "Enter") {
